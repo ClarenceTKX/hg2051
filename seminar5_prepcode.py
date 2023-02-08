@@ -112,3 +112,20 @@ syl1 = ["N", "IH0", "K", "S"]
 print(rhyme(syl1))
 syl2 = ["F", "AY1", "ER0"]
 print(rhyme(syl2))
+
+# What are the hyponyms of student?
+for synset in wn.synsets('student', wn.NOUN):
+    print(synset.name() + ':', synset.definition())
+student = wn.synset('student.n.01')
+student_types = student.hyponyms()
+print(sorted(lemma.name() for synset in student_types for lemma in synset.lemmas()))
+
+# Use the lowest_common_hypernyms() method on synsets to find what is the shared hypernym of student and professor.
+prof = wn.synset('professor.n.01')
+lecturer = wn.synset('lecturer.n.01')
+print(prof.lowest_common_hypernyms(student))
+# [Synset('person.n.01')]
+
+# How about professor and lecturer?
+print(prof.lowest_common_hypernyms(lecturer))
+# [Synset('educator.n.01')]
