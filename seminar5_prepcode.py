@@ -85,4 +85,30 @@ right.lowest_common_hypernyms(tortoise)
 right.lowest_common_hypernyms(novel)
 
 # knowledge check
+# what percentage of the text’s vocabulary are not in the wordlist?
 from nltk.corpus import words
+def pctNP_vocab(text):
+    text_vocab = set(w.lower() for w in text if w.isalpha())
+    corpus_vocab = set(w.lower() for w in nltk.corpus.words.words())
+    pct = float(-(len(text_vocab) - len(corpus_vocab))/len(corpus_vocab))
+    return pct
+print(pctNP_vocab(nltk.corpus.gutenberg.words('austen-sense.txt')))
+# what percentage of the wordlist are present in the text?
+def pct_vocab(text):
+    text_vocab = set(w.lower() for w in text if w.isalpha())
+    corpus_vocab = set(w.lower() for w in nltk.corpus.words.words())
+    pct = (float(len(text_vocab)/len(corpus_vocab)))
+    return pct
+print(pct_vocab(nltk.corpus.gutenberg.words('austen-sense.txt')))
+
+# Use the ARPABET transcriptions in the nltk.corpus.cmudict corpus to devise a function for
+# identifying rhyming words (how they are identified is up to you).
+# What are the largest clusters of rhyming words?
+def rhyme(syllable):
+    entries = nltk.corpus.cmudict.entries()
+    return [word for word, pron in entries if pron[-(len(syllable)):] == syllable]
+
+syl1 = ["N", "IH0", "K", "S"]
+print(rhyme(syl1))
+syl2 = ["F", "AY1", "ER0"]
+print(rhyme(syl2))
